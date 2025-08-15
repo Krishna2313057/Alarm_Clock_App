@@ -1,4 +1,4 @@
-package com.example.alarmclockapp.data // Make sure this matches your package name
+package com.example.alarmclockapp.data
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow

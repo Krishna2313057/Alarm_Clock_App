@@ -3,24 +3,30 @@ package com.example.alarmclockapp.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.example.alarmclockapp.service.RingtoneService
+import android.util.Log
 import com.example.alarmclockapp.ui.AlarmRingingActivity
+import com.example.alarmclockapp.service.RingtoneService
 
 class AlarmReceiver : BroadcastReceiver() {
 
-    override fun onReceive(context: Context, intent: Intent) {
-        // Get the ringtone URI from the intent that scheduled the alarm
-        val ringtoneUri = intent.getStringExtra("ALARM_TONE_URI")
+    private val TAG = "AlarmReceiver"
 
-        // Start the RingtoneService, passing the URI
+    override fun onReceive(context: Context, intent: Intent) {
+        Log.d(TAG, "Alarm broadcast received! Starting AlarmRingingActivity.")
+
+
+        val ringtoneUri = intent.getStringExtra(RingtoneService.ALARM_TONE_URI)
+
+
         val serviceIntent = Intent(context, RingtoneService::class.java).apply {
-            putExtra("ALARM_TONE_URI", ringtoneUri)
+            putExtra(RingtoneService.ALARM_TONE_URI, ringtoneUri)
         }
         context.startService(serviceIntent)
 
-        // Start the ringing activity
         val activityIntent = Intent(context, AlarmRingingActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+
+            putExtra(RingtoneService.ALARM_TONE_URI, ringtoneUri)
         }
         context.startActivity(activityIntent)
     }

@@ -38,18 +38,18 @@ class SetAlarmFragment : Fragment() {
     private var selectedMinute: Int = 0
     private var selectedRingtoneUri: Uri? = null
 
-    // ActivityResultLauncher for the ringtone picker
+
     private val ringtonePickerLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
 
-            // This is the corrected block to handle the deprecated method
+
             val uri: Uri? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                // Use the new, safer method for Android 13 and above
+
                 result.data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI, Uri::class.java)
             } else {
-                // Use the old, deprecated method for older versions
+
                 @Suppress("DEPRECATION")
                 result.data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
             }

@@ -22,9 +22,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    // Find this line in HomeFragment.kt
+
     private val homeViewModel: HomeViewModel by activityViewModels {
-        // CHANGE IT TO THIS
+
         HomeViewModelFactory(
             requireActivity().application,
             (requireActivity().application as AlarmApplication).repository

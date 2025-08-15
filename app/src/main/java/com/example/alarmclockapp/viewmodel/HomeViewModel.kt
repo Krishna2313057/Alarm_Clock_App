@@ -64,9 +64,9 @@ class HomeViewModel(private val application: Application, private val repository
     private fun scheduleAlarm(alarm: Alarm) {
         val alarmManager = application.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        // Check and request exact alarm permission before scheduling on Android 12+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
-            // This is a simple fix to handle the permission. A better way would be a custom UI dialog.
+
             val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
             intent.data = Uri.parse("package:" + application.packageName)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -95,7 +95,7 @@ class HomeViewModel(private val application: Application, private val repository
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // The permission check is now done at the beginning of the function
+
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
